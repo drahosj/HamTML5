@@ -1,3 +1,22 @@
+var sampleRate;
+var audioContext;
+
+function initializeRecorder(strean){
+    audio_context = new AudioContext;
+    sampleRate = audio_context.sampleRate;
+    var audioInput = audio_context.createMediaStreamSource(stream);
+
+    console.log("Created media stream.");
+
+    var bufferSize = 4096;
+    var recorder =
+        audio_context.createScriptProcessor(bufferSize, 1,
+                1);
+    recorder.onaudioprocess = recorderProcess;
+    audioInput.connect(recorder);
+    recorder.connect(audio_context.destination);
+}
+
 function recorderProcess(e) {
     if (recording){
         var left = e.inputBuffer.getChannelData(0);
@@ -26,3 +45,5 @@ ws.onopen = function(evt) {
                 console.log('No live audio input: ' + e);
             });
 }
+
+window.onload = function() { recording = true }

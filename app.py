@@ -6,10 +6,10 @@ import numpy
 
 app = Flask(__name__)
 
-#ws = GeventWebSocket(app)
+ws = GeventWebSocket(app)
 
 
-#@ws.route('/microphone') 
+@ws.route('/microphone') 
 def audio(ws):
     first = True
     sample_rate = 0
@@ -27,7 +27,7 @@ def audio(ws):
 
 @app.route('/')
 def dashboard():
-    render_template('dashboard.html')
+    return render_template('dashboard.html')
 
 if __name__ == "__main__":
     app.debug = False
